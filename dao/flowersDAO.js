@@ -1,3 +1,7 @@
+import mongodb from "mongodb";
+
+const ObjectId = mongodb.ObjectId;
+
 let flowers;
 
 export default class FlowersDAO {
@@ -37,6 +41,40 @@ export default class FlowersDAO {
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return { flowersList: [], totalNumFlowers: 0 };
+    }
+  }
+
+  static async getRatings() {
+    let ratings = [];
+    try {
+      ratings = await flowers.distinct("rated");
+      return ratings;
+    } catch (e) {
+      console.error(`unable to get ratings, ${e}`);
+      return ratings;
+    }
+  }
+
+  static async apiGetFlowerById(id) {
+    try {
+      return await flowers
+        .aggregate([
+          {
+            $match: { _id: new ObjectId(id) },
+          },
+          {
+            $lookup: {
+              from: "reviews",
+              localField: "_id",
+              foreignField: "flower_id",
+              as: "reviews",
+            },
+          },
+        ])
+        .next();
+    } catch (e) {
+      console.error(`something went wrong in getFlowerById: ${e}`);
+      throw e;
     }
   }
 }
