@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/flowermap-frontend/static/css/main.7aeccbc3.css",
-    "main.js": "/flowermap-frontend/static/js/main.13d81516.js",
-    "index.html": "/flowermap-frontend/index.html",
-    "main.7aeccbc3.css.map": "/flowermap-frontend/static/css/main.7aeccbc3.css.map",
-    "main.13d81516.js.map": "/flowermap-frontend/static/js/main.13d81516.js.map"
+    "main.css": "/static/css/main.7aeccbc3.css",
+    "main.js": "/static/js/main.13d81516.js",
+    "index.html": "/index.html",
+    "main.7aeccbc3.css.map": "/static/css/main.7aeccbc3.css.map",
+    "main.13d81516.js.map": "/static/js/main.13d81516.js.map"
   },
   "entrypoints": [
     "static/css/main.7aeccbc3.css",
