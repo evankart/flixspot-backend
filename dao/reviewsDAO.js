@@ -19,6 +19,18 @@ export default class ReviewsDAO {
     }
   }
 
+  static async getReviews({} = {}) {
+    cursor = await conn.find(query);
+
+    const reviewsList = await cursor.toArray();
+    console.log(reviewsList);
+    return { reviewsList };
+  }
+  catch(e) {
+    console.error(`Unable to issue find command, ${e}`);
+    return { reviewsList: [] };
+  }
+
   static async addReview(movieId, user, review, date) {
     try {
       const reviewDoc = {
@@ -41,7 +53,7 @@ export default class ReviewsDAO {
   static async updateReview(reviewId, userId, review, date) {
     try {
       const updateResponse = await reviews.updateOne(
-        { user_id: userId, _id: new ObjectId(reviewId) },
+        { _id: new ObjectId(reviewId), user_id: userId },
         { $set: { review: review, date: date } }
       );
       return updateResponse;

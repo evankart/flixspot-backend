@@ -13,4 +13,9 @@ app.use("*", (req, res) => {
   res.status(404).json({ error: "not found" });
 });
 
+// app.put("/api/v1/movies", (req, res) => {
+//   console.log(req.body);
+//   return res.json({ message: "put route" });
+// });
+
 export default app;

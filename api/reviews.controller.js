@@ -1,6 +1,18 @@
 import ReviewsDAO from "../dao/reviewsDAO.js";
 
 export default class ReviewsController {
+  static async apiGetReviews(req, res, next) {
+    const reviewsList = await MoviesDAO.getReviews();
+
+    let response = {
+      movies: reviewsList,
+      page: page,
+      filters: filters,
+      entries_per_page: moviesPerPage,
+    };
+    res.json(response);
+  }
+
   static async apiPostReview(req, res) {
     try {
       const movieId = req.body.movie_id;

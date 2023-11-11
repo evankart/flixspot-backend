@@ -7,6 +7,9 @@ const router = express.Router();
 // GET all movies
 router.get("/", MoviesController.apiGetMovies);
 
+// GET reviews by id
+router.get("/review", ReviewsController.apiGetReviews);
+
 // GET movie by Id
 router.get("/:id", MoviesController.apiGetMovieById);
 
