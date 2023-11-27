@@ -1,12 +1,8 @@
 import express from "express";
 import cors from "cors";
 import flowers from "./api/flowers.route.js";
-import port from "./index.js";
 
 const app = express();
-app.listen(port, () => {
-  console.log(`✅ Server is running on port ${PORT}`);
-});
 
 app.use(express.static("build"));
 app.use(cors());
