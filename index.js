@@ -7,8 +7,6 @@ import ReviewsDAO from "./dao/reviewsDAO.js";
 async function main() {
   dotenv.config();
 
-  //   const flowersdb = process.env.FLOWERS_DB_URI;
-
   const client = new mongodb.MongoClient(process.env.FLOWERS_DB_URI);
   const port = process.env.PORT || 8000;
 
