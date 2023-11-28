@@ -18,7 +18,7 @@ async function main() {
     await ReviewsDAO.injectDB(client);
 
     app.listen(port, () => {
-      console.log("server is running on port" + port);
+      console.log("Server is running on port" + port);
     });
   } catch (e) {
     console.error(e);
