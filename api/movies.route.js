@@ -1,12 +1,12 @@
 import express from "express";
-import FlowersController from "./flowers.controller.js";
+import MoviesController from "./movies.controller.js";
 import ReviewsController from "./reviews.controller.js";
 
 const router = express.Router();
 
-router.route("/").get(FlowersController.apiGetFlowers);
-router.route("/id/:id").get(FlowersController.apiGetFlowerById);
-router.route("/ratings").get(FlowersController.apiGetRatings);
+router.route("/").get(MoviesController.apiGetMovies);
+router.route("/id/:id").get(MoviesController.apiGetMovieById);
+router.route("/ratings").get(MoviesController.apiGetRatings);
 
 router
   .route("/review")

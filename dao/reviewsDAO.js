@@ -10,21 +10,21 @@ export default class ReviewsDAO {
     }
     try {
       reviews = await conn
-        .db(process.env.FLOWERREVIEWS_NS)
+        .db(process.env.MOVIEREVIEWS_NS)
         .collection("reviews");
     } catch (e) {
       console.error(`unable to establish connection handle in reviewDAO: ${e}`);
     }
   }
 
-  static async addReview(flowerId, user, review, date) {
+  static async addReview(movieId, user, review, date) {
     try {
       const reviewDoc = {
         name: user.name,
         user_id: user._id,
         date: date,
         review: review,
-        flower_id: new ObjectId(flowerId),
+        movie_id: new ObjectId(movieId),
       };
 
       return await reviews.insertOne(reviewDoc);

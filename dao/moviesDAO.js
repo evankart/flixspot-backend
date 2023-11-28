@@ -2,24 +2,24 @@ import mongodb from "mongodb";
 
 const ObjectId = mongodb.ObjectId;
 
-let flowers;
+let movies;
 
-export default class FlowersDAO {
+export default class MoviesDAO {
   static async injectDB(conn) {
-    if (flowers) {
+    if (movies) {
       return;
     }
     try {
-      flowers = await conn.db(process.env.FLOWERS_NS).collection("movies");
+      movies = await conn.db(process.env.MOVIES_NS).collection("movies");
     } catch (e) {
-      console.error(`unable to connect in FlowersDAO: ${e}`);
+      console.error(`unable to connect in MoviesDAO: ${e}`);
     }
   }
 
-  static async getFlowers({
+  static async getMovies({
     filters = null,
     page = 0,
-    flowersPerPage = 20,
+    moviesPerPage = 20,
   } = {}) {
     let query;
     if (filters) {
@@ -31,23 +31,23 @@ export default class FlowersDAO {
     }
     let cursor;
     try {
-      cursor = await flowers
+      cursor = await movies
         .find(query)
-        .limit(flowersPerPage)
-        .skip(flowersPerPage * page);
-      const flowersList = await cursor.toArray();
-      const totalNumFlowers = await flowers.countDocuments(query);
-      return { flowersList, totalNumFlowers };
+        .limit(moviesPerPage)
+        .skip(moviesPerPage * page);
+      const moviesList = await cursor.toArray();
+      const totalNumMovies = await movies.countDocuments(query);
+      return { moviesList, totalNumMovies };
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
-      return { flowersList: [], totalNumFlowers: 0 };
+      return { moviesList: [], totalNumMovies: 0 };
     }
   }
 
   static async getRatings() {
     let ratings = [];
     try {
-      ratings = await flowers.distinct("rated");
+      ratings = await movies.distinct("rated");
       return ratings;
     } catch (e) {
       console.error(`unable to get ratings, ${e}`);
@@ -55,9 +55,9 @@ export default class FlowersDAO {
     }
   }
 
-  static async apiGetFlowerById(id) {
+  static async apiGetMovieById(id) {
     try {
-      return await flowers
+      return await movies
         .aggregate([
           {
             $match: { _id: new ObjectId(id) },
@@ -66,14 +66,14 @@ export default class FlowersDAO {
             $lookup: {
               from: "reviews",
               localField: "_id",
-              foreignField: "flower_id",
+              foreignField: "movie_id",
               as: "reviews",
             },
           },
         ])
         .next();
     } catch (e) {
-      console.error(`something went wrong in getFlowerById: ${e}`);
+      console.error(`something went wrong in getMovieById: ${e}`);
       throw e;
     }
   }
