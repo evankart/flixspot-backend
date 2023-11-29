@@ -10,6 +10,7 @@ export default class ReviewsDAO {
     }
     try {
       reviews = await conn
+      // Movie reviews NS
         .db(process.env.MOVIEREVIEWS_NS)
         .collection("reviews");
     } catch (e) {
