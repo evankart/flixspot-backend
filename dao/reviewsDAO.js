@@ -3,6 +3,7 @@ import mongodb from "mongodb";
 const ObjectId = mongodb.ObjectId;
 
 let reviews;
+
 export default class ReviewsDAO {
   static async injectDB(conn) {
     if (reviews) {
@@ -10,8 +11,8 @@ export default class ReviewsDAO {
     }
     try {
       reviews = await conn
-      // Movie reviews NS
-        .db(process.env.MOVIEREVIEWS_NS)
+        // Movie reviews NS
+        .db(process.env.MOVIES_NS)
         .collection("reviews");
     } catch (e) {
       console.error(`unable to establish connection handle in reviewDAO: ${e}`);
