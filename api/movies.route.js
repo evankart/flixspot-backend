@@ -4,14 +4,23 @@ import ReviewsController from "./reviews.controller.js";
 
 const router = express.Router();
 
-router.route("/").get(MoviesController.apiGetMovies);
-router.route("/id/:id").get(MoviesController.apiGetMovieById);
-router.route("/ratings").get(MoviesController.apiGetRatings);
+// GET all movies
+router.get("/", MoviesController.apiGetMovies);
 
-router
-  .route("/review")
-  .post(ReviewsController.apiPostReview)
-  .put(ReviewsController.apiUpdateReview)
-  .delete(ReviewsController.apiDeleteReview);
+// GET movie by Id
+router.get("/:id", MoviesController.apiGetMovieById);
+
+// Get ratings
+router.get("/ratings", MoviesController.apiGetRatings);
+
+/* REVIEWS */
+// POST movie review
+router.post("/review", ReviewsController.apiPostReview);
+
+// PUT (edit) movie review
+router.put("/review", ReviewsController.apiUpdateReview);
+
+// DELETE movie review
+router.delete("/review", ReviewsController.apiDeleteReview);
 
 export default router;
