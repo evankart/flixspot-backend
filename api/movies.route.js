@@ -15,12 +15,12 @@ router.get("/ratings", MoviesController.apiGetRatings);
 
 /* REVIEWS */
 // POST movie review
-router.post("/review", ReviewsController.apiPostReview);
-
 // PUT (edit) movie review
-router.put("/review", ReviewsController.apiUpdateReview);
-
 // DELETE movie review
-router.delete("/review", ReviewsController.apiDeleteReview);
+router
+  .route("/review")
+  .post(ReviewsController.apiPostReview)
+  .put(ReviewsController.apiUpdateReview)
+  .delete(ReviewsController.apiDeleteReview);
 
 export default router;
