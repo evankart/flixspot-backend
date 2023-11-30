@@ -20,6 +20,7 @@ export default class ReviewsDAO {
   }
 
   static async addReview(movieId, user, review, date) {
+
     try {
       const reviewDoc = {
         name: user.name,
@@ -28,6 +29,8 @@ export default class ReviewsDAO {
         review: review,
         movie_id: new ObjectId(movieId),
       };
+
+      console.log(reviewDoc);
 
       return await reviews.insertOne(reviewDoc);
     } catch (e) {
