@@ -1,17 +1,21 @@
 import ReviewsDAO from "../dao/reviewsDAO.js";
 
 export default class ReviewsController {
-  static async apiPostReview(req, res, next) {
+  static async apiPostReview(req, res) {
     try {
-      console.log(req.body.movie_id);
       const movieId = req.body.movie_id;
       const review = req.body.review;
       const userInfo = {
         name: req.body.name,
         _id: req.body.user_id,
       };
-
       const date = new Date();
+
+      console.log(`API POST REVIEW DAO`);
+      console.log(`(apiPostReview) request body`, req.body);
+      console.log(`(apiPostReview) movieId: ${movieId}`);
+      console.log(`(apiPostReview) review: ${review}`);
+      console.log(`(apiPostReview) userInfo: ${userInfo}`);
 
       const ReviewResponse = await ReviewsDAO.addReview(
         movieId,
@@ -25,14 +29,22 @@ export default class ReviewsController {
     }
   }
 
-  static async apiUpdateReview(req, res, next) {
+  static async apiUpdateReview(req, res) {
     try {
       const reviewId = req.body.review_id;
       const review = req.body.review;
+      const userId = req.body.user_id;
       const date = new Date();
+
+      console.log(`API UPDATE REVIEW DAO`);
+      console.log(`(apiUpdateReview) request body`, req.body);
+      console.log(`(apiUpdateReview) reviewId: ${reviewId}`);
+      console.log(`(apiUpdateReview) user.id: ${userId}`);
+      console.log(`(apiUpdateReview) review: ${review}`);
+
       const ReviewResponse = await ReviewsDAO.updateReview(
         reviewId,
-        req.body.user_id,
+        userId,
         review,
         date
       );
