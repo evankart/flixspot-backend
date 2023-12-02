@@ -46,7 +46,7 @@ export default class ReviewsDAO {
       );
       return updateResponse;
     } catch (e) {
-      console.error(`unable to update review: ${e}`);
+      console.error(`error updating review: ${e}`);
       return { error: e };
     }
   }
