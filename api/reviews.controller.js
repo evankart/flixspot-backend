@@ -42,6 +42,7 @@ export default class ReviewsController {
   }
 
   static async apiUpdateReview(req, res) {
+    console.log(`apiUpdateReview req.body: ${req.body}`);
     try {
       const reviewId = req.body.review_id;
       const review = req.body.review;

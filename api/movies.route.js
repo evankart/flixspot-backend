@@ -25,7 +25,8 @@ router.get("/ratings", MoviesController.apiGetRatings);
 router
   .route("/review")
   .post(ReviewsController.apiPostReview)
-  .put(ReviewsController.apiUpdateReview)
   .delete(ReviewsController.apiDeleteReview);
+
+router.put("/:id/review", ReviewsController.apiUpdateReview);
 
 export default router;
