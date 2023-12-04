@@ -78,11 +78,12 @@ export default class MoviesDAO {
     }
   }
 
-  static async updateMoviebyId(movieId) {
+  static async updateMoviebyId(movieId, newTitle) {
+    console.log(`newTitle: ${newTitle}`);
     try {
       const updateResponse = await movies.updateOne(
         { _id: new ObjectId(movieId) },
-        { $set: { title: "TEST" } }
+        { $set: { title: newTitle } }
       );
       console.log(updateResponse);
       return updateResponse;

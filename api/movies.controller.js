@@ -47,15 +47,21 @@ export default class MoviesController {
 
   static async apiUpdateMovieById(req, res, next) {
     console.log("apiUdateMovieById req.body: ", req.body);
+
+    let movieId = req.params.id;
+    let newTitle = req.body.newTitle;
     try {
-      let movieResponse = await MoviesDAO.updateMoviebyId(
-        "573a1390f29313caabcd42e8"
-      );
+      let movieResponse = await MoviesDAO.updateMoviebyId(movieId, newTitle);
       res.json(movieResponse);
     } catch (e) {
       console.log(`api, ${e}`);
       res.status(500).json({ error: e });
     }
+
+    // console.log("apiUdateMovieById req: ", req);
+
+    console.log("apiUdateMovieById req.params: ", req.params);
+    console.log("apiUdateMovieById req.params.id: ", req.params.id);
   }
 
   static async apiGetRatings(req, res, next) {
