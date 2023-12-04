@@ -45,6 +45,19 @@ export default class MoviesController {
     }
   }
 
+  static async apiUpdateMovieById(req, res, next) {
+    console.log("apiUdateMovieById req.body: ", req.body);
+    try {
+      let movieResponse = await MoviesDAO.updateMoviebyId(
+        "573a1390f29313caabcd42e8"
+      );
+      res.json(movieResponse);
+    } catch (e) {
+      console.log(`api, ${e}`);
+      res.status(500).json({ error: e });
+    }
+  }
+
   static async apiGetRatings(req, res, next) {
     try {
       let propertyTypes = await MoviesDAO.getRatings();

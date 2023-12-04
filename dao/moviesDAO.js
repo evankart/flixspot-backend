@@ -77,4 +77,18 @@ export default class MoviesDAO {
       throw e;
     }
   }
+
+  static async updateMoviebyId(movieId) {
+    try {
+      const updateResponse = await movies.updateOne(
+        { _id: new ObjectId(movieId) },
+        { $set: { title: "TEST" } }
+      );
+      console.log(updateResponse);
+      return updateResponse;
+    } catch (e) {
+      console.error(`error updating review: ${e}`);
+      return { error: e };
+    }
+  }
 }
