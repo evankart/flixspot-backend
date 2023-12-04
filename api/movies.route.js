@@ -8,7 +8,10 @@ const router = express.Router();
 router.get("/", MoviesController.apiGetMovies);
 
 // GET reviews by id
-router.get("/review/:id", ReviewsController.apiGetReviews);
+router.get("/:id/review", ReviewsController.apiGetReviews);
+
+// UPDATE review by id
+router.put("/:review_id", ReviewsController.apiUpdateReviewById);
 
 // GET or UPDATE movie by Id
 router
@@ -26,7 +29,5 @@ router
   .route("/review")
   .post(ReviewsController.apiPostReview)
   .delete(ReviewsController.apiDeleteReview);
-
-router.put("/:id/review", ReviewsController.apiUpdateReview);
 
 export default router;

@@ -19,19 +19,21 @@ export default class ReviewsDAO {
     }
   }
 
-  static async getReviews({} = {}) {
-    cursor = await conn.find(query);
-
-    const reviewsList = await cursor.toArray();
-    console.log(reviewsList);
-    return { reviewsList };
+  static async getReviews(movie_id) {
+    let cursor;
+    console.log(movie_id);
+    try {
+      cursor = await reviews.find({ movie_id: new ObjectId(movie_id) });
+      const reviewsList = await cursor.toArray();
+      console.log("reviewsList: ", reviewsList);
+      return { reviewsList };
+    } catch (e) {
+      console.error(`Unable to issue find command, ${e}`);
+      return { reviewsList: [] };
+    }
   }
-  catch(e) {
-    console.error(`Unable to issue find command, ${e}`);
-    return { reviewsList: [] };
-  }
 
-  static async addReview(movieId, user, review, date) {
+  static async addReview(movieId, user, review, date, review_id) {
     try {
       const reviewDoc = {
         name: user.name,
@@ -39,6 +41,7 @@ export default class ReviewsDAO {
         date: date,
         review: review,
         movie_id: new ObjectId(movieId),
+        _id: review_id,
       };
 
       console.log(reviewDoc);
@@ -50,13 +53,35 @@ export default class ReviewsDAO {
     }
   }
 
-  static async updateReview(reviewId, userId, review, date) {
+  static async updateReviewById(review_id, review) {
+    console.log(`REVIEWSDAO updateReview`);
+    // console.log(`(reviewsDAO) reviewId`, reviewId);
+    // console.log(`(reviewsDAO) userId: ${userId}`);
+    // console.log(`(reviewsDAO) review: ${review}`);
+    // console.log(`(reviewsDAO) date: ${date}`);
+
+    const filter = { _id: Object("6568e39497f664516683f6bc") };
+    const update = {
+      $set: {
+        review: "UPDATED REVIEW",
+      },
+    };
+
     try {
       const updateResponse = await reviews.updateOne(
-        { _id: new ObjectId(reviewId), user_id: userId },
-        { $set: { review: review, date: date } }
+        { _id: new ObjectId(review_id) },
+        { $set: { review: review } }
       );
+
+      console.log(updateResponse);
       return updateResponse;
+
+      // try {
+      //   const updateResponse = await reviews.updateOne(
+      //     { _id: new Object(reviewId), user_id: userId },
+      //     { $set: { review: review, date: date } }
+      //   );
+      //   return updateResponse;
     } catch (e) {
       console.error(`error updating review: ${e}`);
       return { error: e };
