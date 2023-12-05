@@ -50,9 +50,9 @@ export default class ReviewsController {
 
   static async apiUpdateReviewById(req, res, next) {
     console.log(`apiUpdateReview req.body: `, req.body);
-    let review_id = req.body.review_id;
-    let review = req.body.review;
-    let userId = req.body.user_id;
+    let review_id = req.body.data.review_id;
+    let review = req.body.data.review;
+    let userId = req.body.data.user_id;
     let date = new Date();
     try {
       const ReviewResponse = await ReviewsDAO.updateReviewById(
