@@ -14,9 +14,8 @@ router.get("/:id/review", ReviewsController.apiGetReviews);
 router.put("/:review_id", ReviewsController.apiUpdateReviewById);
 
 // GET or UPDATE movie by Id
-router
-  .get("/:id", MoviesController.apiGetMovieById)
-  .put("/:id", MoviesController.apiUpdateMovieById);
+router.get("/:id", MoviesController.apiGetMovieById);
+// .put("/:id", MoviesController.apiUpdateMovieById);
 
 // Get ratings
 router.get("/ratings", MoviesController.apiGetRatings);

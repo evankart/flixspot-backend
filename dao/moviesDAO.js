@@ -16,18 +16,42 @@ export default class MoviesDAO {
     }
   }
 
-  static async getMovies({
-    filters = null,
-    page = 0,
-    moviesPerPage = 20,
-  } = {}) {
-    let query;
+  static async getMovies({ filters, page = 0, moviesPerPage = 20 } = {}) {
+    let query = {};
+    let titleQuery;
+    let ratedQuery;
+    let title;
+    let rated;
+
+    console.log("filters: ", filters);
     if (filters) {
       if ("title" in filters) {
-        query = { $text: { $search: filters["title"] } };
-      } else if ("rated" in filters) {
-        query = { rated: { $eq: filters["rated"] } };
+        title = filters["title"];
+        query.$text = { $search: `${title}` };
+        console.log(query);
+      } else {
+        title = undefined;
+        titleQuery = null;
       }
+      if ("rated" in filters) {
+        rated = filters["rated"];
+        // ratedQuery = { rated: { $eq: filters["rated"] } };
+        query.rated = { $eq: `${rated}` };
+        console.log(query);
+      } else {
+        rated = undefined;
+        ratedQuery = null;
+      }
+
+      // query = {
+      //   // $text: { $search: `'${title}'` },
+      //   rated: { $eq: `'${rated}'` },
+      // };
+      // console.log(
+      //   "queryTarget: ",
+      //   "{ '$text': { '$search': 'white' }, rated: {'$eq': 'PG'} }"
+      // );
+      // console.log("query: ", query);
     }
     let cursor;
     try {

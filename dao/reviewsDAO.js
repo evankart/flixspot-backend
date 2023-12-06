@@ -1,7 +1,6 @@
 import mongodb from "mongodb";
 
 const ObjectId = mongodb.ObjectId;
-
 let reviews;
 
 export default class ReviewsDAO {
@@ -53,35 +52,20 @@ export default class ReviewsDAO {
     }
   }
 
-  static async updateReviewById(review_id, review) {
+  static async updateReviewById(review_id, review, date) {
     console.log(`REVIEWSDAO updateReview`);
-    // console.log(`(reviewsDAO) reviewId`, reviewId);
-    // console.log(`(reviewsDAO) userId: ${userId}`);
-    // console.log(`(reviewsDAO) review: ${review}`);
-    // console.log(`(reviewsDAO) date: ${date}`);
-
-    const filter = { _id: Object("6568e39497f664516683f6bc") };
-    const update = {
-      $set: {
-        review: "UPDATED REVIEW",
-      },
-    };
+    console.log(`(reviewsDAO) review_id ${review_id}`);
+    console.log(`(reviewsDAO) review: ${review}`);
+    console.log(`(reviewsDAO) date: ${date}`);
 
     try {
       const updateResponse = await reviews.updateOne(
         { _id: new ObjectId(review_id) },
-        { $set: { review: review } }
+        { $set: { review: review, date: date } }
       );
 
-      console.log(updateResponse);
+      console.log("updateResponse: ", updateResponse);
       return updateResponse;
-
-      // try {
-      //   const updateResponse = await reviews.updateOne(
-      //     { _id: new Object(reviewId), user_id: userId },
-      //     { $set: { review: review, date: date } }
-      //   );
-      //   return updateResponse;
     } catch (e) {
       console.error(`error updating review: ${e}`);
       return { error: e };

@@ -6,12 +6,15 @@ export default class MoviesController {
       ? parseInt(req.query.moviesPerPage)
       : 20;
     const page = req.query.page ? parseInt(req.query.page) : 0;
-
+    console.log("request: ", req.query);
     let filters = {};
-    if (req.query.rated) {
-      filters.rated = req.query.rated;
-    } else if (req.query.title) {
+    if (req.query["$rated"]) {
+      filters.rated = req.query["$rated"];
+      console.log("filters: ", filters);
+    }
+    if (req.query.title) {
       filters.title = req.query.title;
+      console.log("filters: ", filters);
     }
 
     const { moviesList, totalNumMovies } = await MoviesDAO.getMovies({
