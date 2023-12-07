@@ -29,7 +29,7 @@ export default class ReviewsController {
 
       // console.log(`API POST REVIEW DAO`);
       // console.log(`(apiPostReview) request body`, req.body);
-      // console.log(`(apiPostReview) movieId: ${movieId}`);
+      // console.lonodeg(`(apiPostReview) movieId: ${movieId}`);
       // console.log(`(apiPostReview) review: ${review}`);
       // console.log(`(apiPostReview) userInfo: ${userInfo}`);
 
