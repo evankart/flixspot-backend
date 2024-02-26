@@ -1,7 +1,46 @@
 import mongodb from "mongodb";
+import dotenv from "dotenv";
+import pkg from "pg";
+const { Pool } = pkg;
 
 const ObjectId = mongodb.ObjectId;
 let reviews;
+
+dotenv.config();
+
+const pool = new Pool({
+  host: "localhost",
+  port: 5432,
+  user: process.env.PG_USER,
+  database: process.env.PG_DB,
+  password: process.env.PG_PASSWORD,
+});
+
+pool.connect((err) => {
+  if (err) {
+    console.error("connection error", err.stack);
+  } else {
+    console.log("connected to postgres db");
+  }
+});
+
+// async function addUser(userId, userName) {
+//   try {
+//     const result = await pool.query(
+//       "INSERT INTO users (new_id, username) VALUES ($1, $2) RETURNING *",
+//       [userId, userName]
+//     );
+//     console.log(result.rows[0]);
+//   } catch (err) {
+//     console.error(err);
+//   }
+// }
+
+pool.query("SELECT * FROM users").then((res) => {
+  console.log(res.rows);
+});
+
+// addUser(1, "John Doe");
 
 export default class ReviewsDAO {
   static async injectDB(conn) {
@@ -33,6 +72,26 @@ export default class ReviewsDAO {
   }
 
   static async addReview(movieId, user, review, date, review_id) {
+    try {
+      console.log("addReview");
+      pool.query("SELECT * FROM users").then((res) => {
+        console.log(res.rows);
+      });
+      const text =
+        "INSERT INTO users(username, new_id) VALUES ($1, $2) RETURNING *";
+      const values = [user.name, parseInt(user._id.substring(6))];
+      console.log("values: ", values);
+      pool.query(text, values, (err, res) => {
+        if (err) {
+          console.log(err.stack);
+        } else {
+          console.log(res.rows[0]);
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
     try {
       const reviewDoc = {
         name: user.name,
